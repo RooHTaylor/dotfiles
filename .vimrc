@@ -108,6 +108,8 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'preservim/vim-markdown'
 
+  Plug 'rust-lang/rust.vim'
+
 call plug#end()
 
 " }}}
