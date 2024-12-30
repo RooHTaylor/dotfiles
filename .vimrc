@@ -177,6 +177,9 @@ let NERDTreeIgnore=['\.git$', '\.jpg$', '\.mp4$', '\.ogg$', '\.iso$', '\.pdf$', 
 
 " VIMSCRIPT -------------------------------------------------------------- {{{
 
+" Add :W as an option to save with sudo
+command W w !sudo tee "%" > /dev/null
+
 " Enable the marker method of folding.
 augroup filetype_vim
     autocmd!
