@@ -110,14 +110,17 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'rust-lang/rust.vim'
 
+  Plug 'itchyny/lightline.vim'
+
 call plug#end()
 
 " Enable completion where available.
 " This setting must be set before ALE is loaded.
-"
 " You should not turn this setting on if you wish to use ALE as a completion
 " source for other completion plugins, like Deoplete.
 let g:ale_completion_enabled = 1
+" Disable ALE adding comments to the end of lines for errors.
+let g:ale_virtualtext_cursor = 0
 
 " }}}
 
@@ -260,15 +263,6 @@ endif
 
 " Clear status line when vimrc is reloaded.
 set statusline=
-
-" Status line left side.
-set statusline+=\ %F\ %M\ %Y\ %R
-
-" Use a divider to separate the left side from the right side.
-set statusline+=%=
-
-" Status line right side.
-"set statusline+=\ ascii:\ %b\ hex:\ 0x%B\ row:\ %l\ col:\ %c\ percent:\ %p%%
 
 " Show the status on the second to last line.
 set laststatus=2
