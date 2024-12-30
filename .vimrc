@@ -86,6 +86,14 @@ set wildmode=list:longest
 " Wildmenu will ignore files with these extensions.
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
+" SYNTAX ---------------------------------------------------------------- {{{
+
+" Ngin configuration file highlighting
+au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/* if &ft == '' | setfiletype nginx | endif
+
+
+" }}}
+
 " PLUGINS ---------------------------------------------------------------- {{{
 
 call plug#begin('~/.vim/plugged')
@@ -94,6 +102,12 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'preservim/nerdtree'
 
+  Plug 'pangloss/vim-javascript'
+
+  Plug 'godlygeek/tabular'
+
+  Plug 'preservim/vim-markdown'
+
 call plug#end()
 
 " }}}
@@ -101,7 +115,7 @@ call plug#end()
 " MAPPINGS --------------------------------------------------------------- {{{
 
 " Set the backslash as the leader key.
-let mapleader = "\"
+let mapleader = "\\"
 
 " Press \\ to jump back to the last cursor position.
 nnoremap <leader>\ ``
