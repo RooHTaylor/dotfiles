@@ -16,6 +16,7 @@ symlink() {
 # Link dotfiles
 dotfiles=(
     bashrc
+    gitconfig
 	vimrc
 	vim
 )

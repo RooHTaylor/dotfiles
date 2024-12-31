@@ -1,0 +1,9 @@
+[user]
+	name = Andrew Taylor
+	email = roo.h.taylor@gmail.com
+[color]
+	ui = auto
+[push]
+	default = matching
+[pull]
+	rebase = false
