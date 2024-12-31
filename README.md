@@ -1,10 +1,11 @@
-# Dot Files
+DotFiles
+===============
 
 My personal collection of dot files to be used in *nix environments.
 
 Includes:
-> .vimrc
-> .vim/
+- .vimrc
+- .vim/
 
 ## Installation
 
