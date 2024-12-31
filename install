@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+#
+# Install symlinks to files. Script from Dave Eddy
+#
+# install all files to ~ by symlinking them,
+# this way, updating them is as simple as git pull
+#
+# Original Author: Dave Eddy <dave@daveeddy.com>
+
+# verbose ln, because `ln -v` is not portable
+symlink() {
+	printf '%55s -> %s\n' "${1/#$HOME/\~}" "${2/#$HOME/\~}"
+	ln -nsf "$@"
+}
+
+# Link dotfiles
+dotfiles=(
+	vimrc
+	vim
+)
+for f in "${dotfiles[@]}"; do
+	[[ -d ~/.$f && ! -L ~/.$f ]] && rm -r ~/."$f"
+	symlink "$PWD/$f" ~/."$f"
+done
+
+if [[ -t 1 ]]; then
+	vim '+PlugInstall --sync' +qa
+else
+	printf "may need to run:\n\tvim +'PlugInstall --sync' +qa\n"
+fi
+
+true
+
