@@ -13,7 +13,7 @@ Includes:
 
 Simply run:
 ```bash
-git clone https://github.com/RooHTaylor/dotfiles
+git clone git@github.com:RooHTaylor/dotfiles.git
 cd dotfiles
 ./install
 ```
