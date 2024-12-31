@@ -7,3 +7,5 @@
 	default = matching
 [pull]
 	rebase = false
+[init]
+	defaultBranch = main
