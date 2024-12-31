@@ -64,8 +64,8 @@ set smartcase
 " Show partial command you type in the last line of the screen.
 set showcmd
 
-" Show the mode you are on the last line.
-set showmode
+" Do not show the mode since we are using lightline for statusline
+set noshowmode
 
 " Show matching words during a search.
 set showmatch
@@ -123,6 +123,23 @@ call plug#end()
 let g:ale_completion_enabled = 1
 " Disable ALE adding comments to the end of lines for errors.
 let g:ale_virtualtext_cursor = 0
+
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+      \ },
+      \ 'component': {
+      \   'charvaluehex': '0x%B'
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
 
 " }}}
 
