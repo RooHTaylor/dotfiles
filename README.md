@@ -4,6 +4,8 @@ DotFiles
 My personal collection of dot files to be used in *nix environments.
 
 Includes:
+- .bashrc
+- .gitconfig
 - .vimrc
 - .vim/
 
