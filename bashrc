@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-#
-# Original Author: Dave Eddy <dave@daveeddy.com>
+# 
+# Author: Andrew Taylor
+# Excerpts taken from: Dave Eddy <dave@daveeddy.com>
 
 # If not running interactively, don't do anything
 [[ -n $PS1 ]] || return
@@ -46,13 +47,17 @@ shopt -s dirspell 2>/dev/null || true
 alias ..='echo "cd .."; cd ..'
 alias l='ls'
 alias ll='ls -lha'
+# Keep environment for sudo commands
+alias sudo='sudo -E'
+
+# Git aliases
+alias ga='git add'
+alias gc='git commit'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -94,28 +99,20 @@ set_prompt_colors() {
 
 # Construct the prompt
 # [(exit code)] <user> - <hostname> <uname> <cwd> [git branch] <$|#>
-
 # exit code of last process
 PS1='$(ret=$?;(($ret!=0)) && echo "\[${COLOR256[0]}\]($ret) \[${COLOR256[256]}\]")'
-
 # username (red for root)
 PS1+='\[${PROMPT_COLORS[0]}\]\[${COLOR256[257]}\]$(((UID==0)) && echo "\[${COLOR256[0]}\]")\u\[${COLOR256[256]}\] - '
-
 # zonename (global zone warning)
 PS1+='\[${COLOR256[0]}\]\[${COLOR256[257]}\]'"$(zonename 2>/dev/null | grep -q '^global$' && echo 'GZ:')"'\[${COLOR256[256]}\]'
-
 # hostname
 PS1+='\[${PROMPT_COLORS[3]}\]\h '
-
 # uname
 #PS1+='\[${PROMPT_COLORS[2]}\]'"$(uname | tr '[:upper:]' '[:lower:]')"' '
-
 # cwd
 PS1+='\[${PROMPT_COLORS[5]}\]\w '
-
 # optional git branch
 PS1+='$(branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); [[ -n $branch ]] && echo "\[${PROMPT_COLORS[2]}\](\[${PROMPT_COLORS[3]}\]git:$branch\[${PROMPT_COLORS[2]}\]) ")'
-
 # prompt character
 PS1+='\[${PROMPT_COLORS[0]}\]\$\[${COLOR256[256]}\] '
 
@@ -139,9 +136,6 @@ PROMPT_DIRTRIM=6
 . ~/.bash_aliases    2>/dev/null || true
 . ~/.bashrc.local    2>/dev/null || true
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
