@@ -25,7 +25,7 @@ filetype indent on
 syntax on
 
 " Add numbers to the file.
-set number
+set nonumber
 
 " Highlight cursor line underneath the cursor horizontally.
 set cursorline
@@ -113,6 +113,10 @@ call plug#begin('~/.vim/plugged')
   Plug 'itchyny/lightline.vim'
 
   Plug 'tpope/vim-fugitive'
+
+  Plug 'nathanaelkane/vim-indent-guides'
+
+  Plug 'StanAngeloff/php.vim'
 
 call plug#end()
 
