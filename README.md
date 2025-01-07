@@ -1,7 +1,7 @@
 DotFiles
 ===============
 
-My personal collection of dot files to be used in *nix environments.
+My personal dotfiles for bash/*nix environments.
 
 Includes:
 - .bashrc
