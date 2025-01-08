@@ -115,9 +115,9 @@ Plug 'preservim/nerdtree' " File system explorer
 Plug 'itchyny/lightline.vim' " Fancy status line
 Plug 'tpope/vim-fugitive' " Git integration
 Plug 'nathanaelkane/vim-indent-guides' " Indentation highlighting
-" Vim version not supported
-"Plug 'ycm-core/YouCompleteMe', { 'dir': '~/.vim/bundle/',
-"            \'do': './install.py --all' } " Auto completion
+if v:version >= 901 && !has('win32') && !has('win64')
+    Plug 'ycm-core/YouCompleteMe', { 'dir': '~/.vim/bundle/YouCompleteMe/', 'do': 'sudo apt install build-essential cmake python3-dev mono-complete golang nodejs openjdk-17-jdk openjdk-17-jre npm && ./install.py --all' }
+endif
 
 " Language specific plugins
 Plug 'rust-lang/rust.vim'
