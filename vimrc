@@ -115,8 +115,9 @@ Plug 'preservim/nerdtree' " File system explorer
 Plug 'itchyny/lightline.vim' " Fancy status line
 Plug 'tpope/vim-fugitive' " Git integration
 Plug 'nathanaelkane/vim-indent-guides' " Indentation highlighting
-Plug 'ycm-core/YouCompleteMe', { 'dir': '~/.vim/bundle/',
-            \'do': './install.py --all' } " Auto completion
+" Vim version not supported
+"Plug 'ycm-core/YouCompleteMe', { 'dir': '~/.vim/bundle/',
+"            \'do': './install.py --all' } " Auto completion
 
 " Language specific plugins
 Plug 'rust-lang/rust.vim'
