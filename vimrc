@@ -1,135 +1,160 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
-"               
-"               ██╗   ██╗██╗███╗   ███╗██████╗  ██████╗
-"               ██║   ██║██║████╗ ████║██╔══██╗██╔════╝
-"               ██║   ██║██║██╔████╔██║██████╔╝██║     
-"               ╚██╗ ██╔╝██║██║╚██╔╝██║██╔══██╗██║     
-"                ╚████╔╝ ██║██║ ╚═╝ ██║██║  ██║╚██████╗
-"                 ╚═══╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝
-"               
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Personal .vimrc
+" Author: Andrew Taylor
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Disable compatibility with vi which can cause unexpected issues.
+" Disable compatibility with vi
 set nocompatible
 
-" Enable type file detection. Vim will be able to try to detect the type of file is use.
+" Styles
+set background=dark
+
+" Enable file type detection
+" Automatically load plugins and indent files for filetypes
 filetype on
-
-" Enable plugins and load plugin for the detected file type.
 filetype plugin on
-
-" Load an indent file for the detected file type.
 filetype indent on
 
-" Turn syntax highlighting on.
-syntax on
-
-" Add numbers to the file.
-set nonumber
-
-" Highlight cursor line underneath the cursor horizontally.
+" Highlight the line the cursor is on
+" Display cursor line only in the active window
 set cursorline
+augroup cursor_off
+    autocmd!
+    autocmd WinLeave * set nocursorline nocursorcolumn
+    autocmd WinEnter * set cursorline
+augroup END
 
-" Highlight cursor line underneath the cursor vertically.
-set nocursorcolumn
-
-" Set shift width to 4 spaces.
+" Set tab width and expand tabs to spaces
 set shiftwidth=4
-
-" Set tab width to 4 columns.
 set tabstop=4
-
-" Use space characters instead of tabs.
 set expandtab
 
-" Do not save backup files.
+" Do not save backup files
 set nobackup
 
-" Do not let cursor scroll below or above N number of lines when scrolling.
+" Keep the cursor within N lines from top/bottom
 set scrolloff=10
 
-" Do not wrap lines. Allow long lines to extend as far as the line goes.
+" Don't wordwrap
 set nowrap
 
-" While searching though a file incrementally highlight matching characters as you type.
+" Enable incremental highlighting during search
+" Ignore case during search, unless capital letters searched for
+set showmatch
+set hlsearch
 set incsearch
-
-" Ignore capital letters during search.
 set ignorecase
-
-" Override the ignorecase option if searching for capital letters.
-" This will allow you to search specifically for capital letters.
 set smartcase
 
-" Show partial command you type in the last line of the screen.
-set showcmd
-
-" Do not show the mode since we are using lightline for statusline
-set noshowmode
-
-" Show matching words during a search.
-set showmatch
-
-" Use highlighting when doing a search.
-set hlsearch
-
-" Set the commands to save in history default number is 20.
+" Increase command history
 set history=1000
 
-" Enable auto completion menu after pressing TAB.
+" If vim version >= 7.3 enable undofile to enbable undo even after write
+if version >= 703
+    set undodir=~/.vim/backup
+    set undofile
+    set undoreload=10000
+endif
+
+" Enable command auto completion via <Tab>
 set wildmenu
-
-" Make wildmenu behave like similar to Bash completion.
 set wildmode=list:longest
-
-" There are certain files that we would never want to edit with Vim.
-" Wildmenu will ignore files with these extensions.
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
-" SYNTAX ---------------------------------------------------------------- {{{
+" Turn on syntax highlighting
+syntax on
 
-" Ngin configuration file highlighting
-au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/* if &ft == '' | setfiletype nginx | endif
+" Nginx configuration file highlighting
+au BufRead,BufNewFile /etc/nginx/*,/usr/local/nginx/conf/*
+    \ if &ft == ''
+    \   | setfiletype nginx |
+    \ endif
 
+" Set the leader key
+let mapleader='\\'
 
-" }}}
+" Enable sudo-edit via :w!!
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
-" PLUGINS ---------------------------------------------------------------- {{{
+" Jump back to last cursor position
+nnoremap <leader>\ ''
 
-call plug#begin('~/.vim/plugged')
+" Quick command entry with <space> > :
+nnoremap <space> :
 
-  Plug 'dense-analysis/ale'
+" Quick insert line before/after with o/O
+nnoremap o o<esc>
+nnoremap O O<esc>
 
-  Plug 'preservim/nerdtree'
+" Center the cursor vertically when jumping to next search item
+nnoremap n nzz
+nnoremap N Nzz
 
-  Plug 'pangloss/vim-javascript'
+" Yank from cursor to end of line
+nnoremap Y y$
 
-  Plug 'godlygeek/tabular'
+" More easily navigate split windows with Ctrl+j,k,h,l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
 
-  Plug 'preservim/vim-markdown'
+" Resize split windows with Ctrl+<arrow>
+noremap <c-up> <c-w>+
+noremap <c-down> <c-w>-
+noremap <c-left> <c-w>>
+noremap <c-right> <c-w><
 
-  Plug 'rust-lang/rust.vim'
+"
+" Load vim-plug pugins
+" 
+call plug#begin()
 
-  Plug 'itchyny/lightline.vim'
+Plug 'dense-analysis/ale' " Code linting
+Plug 'preservim/nerdtree' " File system explorer
+Plug 'itchyny/lightline.vim' " Fancy status line
+Plug 'tpope/vim-fugitive' " Git integration
+Plug 'nathanaelkane/vim-indent-guides' " Indentation highlighting
+Plug 'ycm-core/YouCompleteMe', { 'dir': '~/.vim/bundle/',
+            \'do': './install.py --all' } " Auto completion
 
-  Plug 'tpope/vim-fugitive'
+" Language specific plugins
+Plug 'rust-lang/rust.vim'
 
-  Plug 'nathanaelkane/vim-indent-guides'
+Plug 'pangloss/vim-javascript'
 
-  Plug 'StanAngeloff/php.vim'
+Plug 'StanAngeloff/php.vim'
+Plug '2072/PHP-Indenting-for-VIm'
+Plug 'rayburgemeestre/phpfolding.vim'
 
+Plug 'preservim/vim-markdown'
+
+" Done loading plugins
 call plug#end()
 
-" Enable completion where available.
-" This setting must be set before ALE is loaded.
-" You should not turn this setting on if you wish to use ALE as a completion
-" source for other completion plugins, like Deoplete.
-let g:ale_completion_enabled = 1
+"
+" Configure Plugins
+"
+
 " Disable ALE adding comments to the end of lines for errors.
 let g:ale_virtualtext_cursor = 0
 
+"Load NerdTree on F3
+nnoremap <F3> :NERDTreeToggle<cr>
+
+" Have nerdtree ignore certain files and directories.
+let NERDTreeIgnore=['\.git$', '\.jpg$', '\.mp4$', '\.ogg$', '\.iso$', '\.pdf$', 
+    \'\.pyc$', '\.odt$', '\.png$', '\.gif$', '\.db$']
+
+" Clear status line when vimrc is reloaded.
+set statusline=
+" Show the status on the second to last line.
+set laststatus=2
+" Turn off mode display, since mode is included in status line
+set noshowmode
+" Add git informatiion and charhexvalue to status line
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'powerline',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
@@ -141,154 +166,11 @@ let g:lightline = {
       \   'charvaluehex': '0x%B'
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
+      \   'gitbranch': 'FugitiveHead'                                                        
       \ },
       \ }
 
-" }}}
+" Turn on indent guines for visual indentation tracking
+let g:indent_guides_enable_on_vim_startup = 1
 
-" MAPPINGS --------------------------------------------------------------- {{{
-
-" Set the backslash as the leader key.
-let mapleader = "\\"
-
-" Press \\ to jump back to the last cursor position.
-nnoremap <leader>\ ``
-
-" Press \p to print the current file to the default printer from a Linux operating system.
-" View available printers:   lpstat -v
-" Set default printer:       lpoptions -d <printer_name>
-" <silent> means do not display output.
-nnoremap <silent> <leader>p :%w !lp<CR>
-
-" Type jj to exit insert mode quickly.
-inoremap jj <Esc>
-
-" Press the space bar to type the : character in command mode.
-nnoremap <space> :
-
-" Pressing the letter o will open a new line below the current one.
-" Exit insert mode after creating a new line above or below the current line.
-nnoremap o o<esc>
-nnoremap O O<esc>
-
-" Center the cursor vertically when moving to the next word during a search.
-nnoremap n nzz
-nnoremap N Nzz
-
-" Yank from cursor to the end of line.
-nnoremap Y y$
-
-" Map the F5 key to run a Python script inside Vim.
-" We map F5 to a chain of commands here.
-" :w saves the file.
-" <CR> (carriage return) is like pressing the enter key.
-" !clear runs the external clear screen command.
-" !python3 % executes the current file with Python.
-nnoremap <f5> :w <CR>:!clear <CR>:!python3 % <CR>
-
-" You can split the window in Vim by typing :split or :vsplit.
-" Navigate the split view easier by pressing CTRL+j, CTRL+k, CTRL+h, or CTRL+l.
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
-
-" Resize split windows using arrow keys by pressing:
-" CTRL+UP, CTRL+DOWN, CTRL+LEFT, or CTRL+RIGHT.
-noremap <c-up> <c-w>+
-noremap <c-down> <c-w>-
-noremap <c-left> <c-w>>
-noremap <c-right> <c-w><
-
-" NERDTree specific mappings.
-" Map the F3 key to toggle NERDTree open and close.
-nnoremap <F3> :NERDTreeToggle<cr>
-
-" Have nerdtree ignore certain files and directories.
-let NERDTreeIgnore=['\.git$', '\.jpg$', '\.mp4$', '\.ogg$', '\.iso$', '\.pdf$', '\.pyc$', '\.odt$', '\.png$', '\.gif$', '\.db$']
-
-" }}}
-
-" VIMSCRIPT -------------------------------------------------------------- {{{
-
-" Add :W as an option to save with sudo
-command W w !sudo tee "%" > /dev/null
-
-" Enable the marker method of folding.
-augroup filetype_vim
-    autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
-augroup END
-
-" If the current file type is HTML, set indentation to 2 spaces.
-autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
-
-" If Vim version is equal to or greater than 7.3 enable undofile.
-" This allows you to undo changes to a file even after saving it.
-if version >= 703
-    set undodir=~/.vim/backup
-    set undofile
-    set undoreload=10000
-endif
-
-" You can split a window into sections by typing `:split` or `:vsplit`.
-" Display cursorline and cursorcolumn ONLY in active window.
-augroup cursor_off
-    autocmd!
-    autocmd WinLeave * set nocursorline nocursorcolumn
-    autocmd WinEnter * set cursorline nocursorcolumn
-augroup END
-
-" If GUI version of Vim is running set these options.
-if has('gui_running')
-
-    " Set the background tone.
-    set background=dark
-
-    " Set the color scheme.
-    colorscheme molokai
-
-    " Set a custom font you have installed on your computer.
-    " Syntax: <font_name>\ <weight>\ <size>
-    set guifont=Monospace\ Regular\ 12
-
-    " Display more of the file by default.
-    " Hide the toolbar.
-    set guioptions-=T
-
-    " Hide the the left-side scroll bar.
-    set guioptions-=L
-
-    " Hide the the left-side scroll bar.
-    set guioptions-=r
-
-    " Hide the the menu bar.
-    set guioptions-=m
-
-    " Hide the the bottom scroll bar.
-    set guioptions-=b
-
-    " Map the F4 key to toggle the menu, toolbar, and scroll bar.
-    " <Bar> is the pipe character.
-    " <CR> is the enter key.
-    nnoremap <F4> :if &guioptions=~#'mTr'<Bar>
-        \set guioptions-=mTr<Bar>
-        \else<Bar>
-        \set guioptions+=mTr<Bar>
-        \endif<CR>
-
-endif
-
-" }}}
-
-" STATUS LINE ------------------------------------------------------------ {{{
-
-" Clear status line when vimrc is reloaded.
-set statusline=
-
-" Show the status on the second to last line.
-set laststatus=2
-
-" }}}
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
