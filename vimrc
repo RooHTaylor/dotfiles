@@ -1,12 +1,13 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Personal .vimrc
 " Author: Andrew Taylor
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 " Disable compatibility with vi
 set nocompatible
 
-" Styles
+" Style
 set background=dark
 
 " Enable file type detection
@@ -37,6 +38,10 @@ set scrolloff=10
 
 " Don't wordwrap
 set nowrap
+
+" Set max width to 80 columns and highlight the max length
+set textwidth=80
+set colorcolumn=81
 
 " Enable incremental highlighting during search
 " Ignore case during search, unless capital letters searched for
@@ -99,7 +104,6 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" Resize split windows with Ctrl+<arrow>
 noremap <c-up> <c-w>+
 noremap <c-down> <c-w>-
 noremap <c-left> <c-w>>
@@ -110,6 +114,7 @@ noremap <c-right> <c-w><
 " 
 call plug#begin()
 
+Plug 'NLKNguyen/papercolor-theme' " Papercolor theme
 Plug 'dense-analysis/ale' " Code linting
 Plug 'preservim/nerdtree' " File system explorer
 Plug 'itchyny/lightline.vim' " Fancy status line
@@ -137,6 +142,8 @@ call plug#end()
 " Configure Plugins
 "
 
+colorscheme PaperColor
+
 " Disable ALE adding comments to the end of lines for errors.
 let g:ale_virtualtext_cursor = 0
 
@@ -155,7 +162,7 @@ set laststatus=2
 set noshowmode
 " Add git informatiion and charhexvalue to status line
 let g:lightline = {
-      \ 'colorscheme': 'powerline',
+      \ 'colorscheme': 'PaperColor',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
@@ -173,5 +180,38 @@ let g:lightline = {
 
 " Turn on indent guines for visual indentation tracking
 let g:indent_guides_enable_on_vim_startup = 1
+" Make guides smaller
+let g:indent_guides_guide_size = 1
+" Start quides on 2nd indent
+let g:indent_guides_start_level = 2
+" Don't show indents for non-files
+let g:indent_guides_exclude_buftype = 1
+" Don't autoload color in terminal
+if !has('gui')
+    let g:indent_guides_auto_colors = 0
+endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if v:version >= 901 && !has('win32') && !has('win64')
+    let g:ycm_enable_semantic_highlighting=1
+    "" Use the next two options to completely disable the help popup at the top of
+    "" the window during completion
+    set completeopt-=preview
+    let g:ycm_add_preview_to_completeopt=0
+    "" Use this option to display a popup instead of a full buffer
+    "let g:ycm_add_preview_to_completeopt="popup"
+    let g:ycm_semantic_triggers =  {
+      \   'c': ['->', '.'],
+      \   'objc': ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+      \            're!\[.*\]\s'],
+      \   'ocaml': ['.', '#'],
+      \   'cpp,cuda,objcpp': ['->', '.', '::'],
+      \   'perl': ['->'],
+      \   'php': ['->', '::'],
+      \   'cs,d,elixir,go,groovy,java,javascript,julia,perl6,python,scala,typescript,vb': ['.'],
+      \   'ruby,rust': ['.', '::'],
+      \   'lua': ['.', ':'],
+      \   'erlang': [':'],
+      \ }
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
