@@ -34,6 +34,10 @@ export LESS_TERMCAP_ZW=$(tput rsupm)
 
 # PATH
 PATH="~/bin:$PATH"
+# load cargo environment
+if [ -f "$HOME/.cargo/env" ]
+    . "$HOME/.cargo/env"
+fi
 
 # Shell Options
 shopt -s cdspell
@@ -143,3 +147,4 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+. "$HOME/.cargo/env"

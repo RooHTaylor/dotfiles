@@ -208,7 +208,7 @@ if v:version >= 901 && !has('win32') && !has('win64')
       \   'perl': ['->'],
       \   'php': ['->', '::'],
       \   'cs,d,elixir,go,groovy,java,javascript,julia,perl6,python,scala,typescript,vb': ['.'],
-      \   'ruby,rust': ['.', '::'],
+      \   'ruby,rust': ['.', '::', 're![\w]{2,}'],
       \   'lua': ['.', ':'],
       \   'erlang': [':'],
       \ }
