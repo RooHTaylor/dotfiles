@@ -35,7 +35,7 @@ export LESS_TERMCAP_ZW=$(tput rsupm)
 # PATH
 PATH="~/bin:$PATH"
 # load cargo environment
-if [ -f "$HOME/.cargo/env" ]
+if [ -f "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
 fi
 
