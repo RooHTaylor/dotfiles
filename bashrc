@@ -8,7 +8,7 @@
 
 # Set environment
 export EDITOR='vim'
-export GREP_COLOR='1;36'
+export GREP_COLORS='mt=1;36'
 export HISTCONTROL='ignoredups'
 export HISTSIZE=5000
 export HISTFILESIZE=5000
@@ -57,6 +57,7 @@ alias sudo='sudo -E'
 # Git aliases
 alias ga='git add'
 alias gc='git commit'
+alias gp='git push'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -147,4 +148,3 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-. "$HOME/.cargo/env"
