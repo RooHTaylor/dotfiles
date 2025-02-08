@@ -52,7 +52,7 @@ alias ..='echo "cd .."; cd ..'
 alias l='ls'
 alias ll='ls -lha'
 # Keep environment for sudo commands
-alias sudo='sudo -E'
+alias sudo='sudo -H -E'
 
 # Git aliases
 alias ga='git add'
