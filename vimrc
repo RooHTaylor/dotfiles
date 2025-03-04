@@ -114,15 +114,13 @@ noremap <c-right> <c-w><
 " 
 call plug#begin()
 
+Plug 'thinca/vim-localrc' " Use .local.vimrc files
 Plug 'NLKNguyen/papercolor-theme' " Papercolor theme
 Plug 'dense-analysis/ale' " Code linting
 Plug 'preservim/nerdtree' " File system explorer
 Plug 'itchyny/lightline.vim' " Fancy status line
 Plug 'tpope/vim-fugitive' " Git integration
 Plug 'nathanaelkane/vim-indent-guides' " Indentation highlighting
-"if v:version >= 901 && !has('win32') && !has('win64')
-"    Plug 'ycm-core/YouCompleteMe', { 'dir': '~/.vim/bundle/YouCompleteMe/', 'do': 'sudo apt install build-essential cmake python3-dev mono-complete golang nodejs openjdk-17-jdk openjdk-17-jre npm && ./install.py --all' }
-"endif
 
 " Language specific plugins
 Plug 'rust-lang/rust.vim'
@@ -190,28 +188,5 @@ let g:indent_guides_exclude_buftype = 1
 if !has('gui')
     let g:indent_guides_auto_colors = 0
 endif
-
-"if v:version >= 901 && !has('win32') && !has('win64')
-"    let g:ycm_enable_semantic_highlighting=1
-    "" Use the next two options to completely disable the help popup at the top of
-    "" the window during completion
-"    set completeopt-=preview
-"    let g:ycm_add_preview_to_completeopt=0
-    "" Use this option to display a popup instead of a full buffer
-    "let g:ycm_add_preview_to_completeopt="popup"
-"    let g:ycm_semantic_triggers =  {
-      \   'c': ['->', '.'],
-      \   'objc': ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
-      \            're!\[.*\]\s'],
-      \   'ocaml': ['.', '#'],
-      \   'cpp,cuda,objcpp': ['->', '.', '::'],
-      \   'perl': ['->'],
-      \   'php': ['->', '::'],
-      \   'cs,d,elixir,go,groovy,java,javascript,julia,perl6,python,scala,typescript,vb': ['.'],
-      \   'ruby,rust': ['.', '::', 're![\w]{2,}'],
-      \   'lua': ['.', ':'],
-      \   'erlang': [':'],
-      \ }
-"endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
