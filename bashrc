@@ -34,7 +34,7 @@ export LESS_TERMCAP_ZW=$(tput rsupm)
 
 # PATH
 PATH="~/bin:$PATH"
-# load cargo environment
+# load cargo environment for Rust
 if [ -f "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
 fi

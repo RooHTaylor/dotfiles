@@ -124,13 +124,10 @@ Plug 'nathanaelkane/vim-indent-guides' " Indentation highlighting
 
 " Language specific plugins
 Plug 'rust-lang/rust.vim'
-
 Plug 'pangloss/vim-javascript'
-
 Plug 'StanAngeloff/php.vim'
 Plug '2072/PHP-Indenting-for-VIm'
 Plug 'rayburgemeestre/phpfolding.vim'
-
 Plug 'preservim/vim-markdown'
 
 " Done loading plugins
@@ -147,7 +144,6 @@ let g:ale_virtualtext_cursor = 0
 
 "Load NerdTree on F3
 nnoremap <F3> :NERDTreeToggle<cr>
-
 " Have nerdtree ignore certain files and directories.
 let NERDTreeIgnore=['\.git$', '\.jpg$', '\.mp4$', '\.ogg$', '\.iso$', '\.pdf$', 
     \'\.pyc$', '\.odt$', '\.png$', '\.gif$', '\.db$']
