@@ -153,3 +153,25 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Keep dotfiles up-to-date across machines with automatic git-pull
+# Check if bashrc changes, because we update it from within itself and could
+#   have a new version now that needs to be sourced.
+DOTFILES_REPO="$HOME/dotfiles"
+BASHRC_FILE="bashrc" #NO DOT
+
+if [ -d "$DOTFILES_REPO" ] && [ -d "$DOTFILES_REPO/.git" ]; then
+  (
+    cd "$DOTFILES_REPO" || return
+    OLD_BASHRC_HASH=$(git hash-object "$BASHRC_FILE" 2>/dev/null)
+
+    git pull --quiet 2>/dev/null
+
+    if [ -f "$BASHRC_REL_PATH" ]; then
+      NEW_BASHRC_HASH=$(git hash-object "$BASHRC_FILE" 2>/dev/null)
+      if [ "$OLD_BASHRC_HASH" != "$NEW_BASHRC_HASH" ]; then
+        echo -e "\n\e[33m⚡ Dotfiles Updated! New \~/.bashrc downloaded.\e[0m"
+        echo -e "\e[33m   Please run 'source \~/.bashrc' or start a new terminal.\e[0m\n"
+      fi
+    fi
+  ) &
+fi
