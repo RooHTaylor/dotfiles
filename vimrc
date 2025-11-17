@@ -39,8 +39,9 @@ set scrolloff=10
 " Don't wordwrap
 set nowrap
 
-" Set max width to 80 columns and highlight the max length
-set textwidth=80
+" Clear max width and highlight the recommended max length
+" Setting max width by default will auto-line-break, which is not always desired
+set textwidth=0
 set colorcolumn=81
 
 " Enable incremental highlighting during search
